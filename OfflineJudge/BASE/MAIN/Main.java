@@ -17,7 +17,7 @@ class  Main {
         for (int i = 0; i < n; i++) {
             int num = reader.nextInt();
             if (num != 0) {
-                min = num < min ? num : min;
+                min = Math.min(num, min);
                 set.add(num);
             }
         }
@@ -30,21 +30,32 @@ class  Main {
             List<Integer> list = new ArrayList<>(set.stream().toList());
             Collections.sort(list);
 
-            while (k != 0) {
+            while (k != 0 && !list.isEmpty()) {
                 k--;
                 for (int i = 0; i < list.size(); i++) {
                     list.set(i, list.get(i) - min);
-                    if (list.get(i) == 0 || list.get(i) < 0) {
-                        list.remove(i);
-                        i--;
+                    if (!(list.size() == 1)) {
+                        if (list.get(i) == 0 || list.get(i) < 0) {
+                            list.remove(i);
+                            i--;
+                        }
                     }
                 }
                 sb.append(min).append("\n");
                 min = list.get(0);
-
             }
         }
         System.out.println(sb);
+    }
+
+    public static int findBeforeMin(List<Integer> list) {
+        int min = Integer.MAX_VALUE;
+        int beforeMin = Integer.MAX_VALUE;
+        for (Integer integer : list) {
+            beforeMin = min;
+            min = Math.min(integer, min);
+        }
+        return (min == 0) ? beforeMin : min;
     }
 
     static class InputReader {
