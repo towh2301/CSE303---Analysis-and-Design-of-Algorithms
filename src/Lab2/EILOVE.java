@@ -1,44 +1,28 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+package Lab2;
+
+import java.io.*;
 import java.util.*;
 
-class EIPAIR {
-    static InputReader sc = new InputReader(System.in);
-    static int numOfTestcases, numOfGifts, result, priceOfGift;
-    static HashMap<Integer, Integer> giftMap;
-    static StringBuilder sb = new StringBuilder();
+public class EILOVE {
+    static InputReader reader = new InputReader(System.in);
 
     public static void main(String[] args) {
-        numOfTestcases = sc.nextInt();
-        solve(numOfTestcases);
-        System.out.println(sb);
+        long numOfGifts = reader.nextLong();
+        long money = reader.nextLong();
+        System.out.println(solve(numOfGifts, money));
     }
 
-    public static void solve(int testcases) {
-        while(testcases != 0) {
-            result = 0;
-            giftMap = new HashMap<>();
-            numOfGifts = sc.nextInt();
-            for (int i = 0; i < numOfGifts; i++) {
-                priceOfGift = sc.nextInt();
-                giftMap.put(priceOfGift, giftMap.getOrDefault(priceOfGift, 0) + 1);
-            }
+    public static long solve(long numOfGifts, long money) {
+        long res = -1;
 
-            for (int appearances : giftMap.values()) {
-                if (appearances > 1) {
-                    result += count(appearances);
-                }
+        for (int i = 0; i < numOfGifts; i++) {
+            long gift = reader.nextLong();
+            if (gift <= money) {
+                res = Math.max(res, gift);
             }
-            sb.append(result).append("\n");
-            testcases--;
         }
-    }
 
-    public static int count(int appearances){
-        return appearances*(appearances - 1) / 2;
+        return res;
     }
 
     static class InputReader {

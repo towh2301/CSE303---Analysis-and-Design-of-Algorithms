@@ -1,36 +1,46 @@
-import java.io.*;
+package Lab1;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
-class EIUPAINTING {
-    static InputReader reader = new InputReader(System.in);
+class EIPAIR {
+    static InputReader sc = new InputReader(System.in);
+    static int numOfTestcases, numOfGifts, result, priceOfGift;
+    static HashMap<Integer, Integer> giftMap;
+    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        int numOfElements = reader.nextInt();
-        solve(numOfElements);
+    public static void main(String[] args) {
+        numOfTestcases = sc.nextInt();
+        solve(numOfTestcases);
+        System.out.println(sb);
     }
 
-    public static void solve(int numOfElements) throws IOException {
-        int result = 0, num = 0;
-        HashMap<Integer, Integer> frequencyNumber = new HashMap<>();
+    public static void solve(int testcases) {
+        while(testcases != 0) {
+            result = 0;
+            giftMap = new HashMap<>();
+            numOfGifts = sc.nextInt();
+            for (int i = 0; i < numOfGifts; i++) {
+                priceOfGift = sc.nextInt();
+                giftMap.put(priceOfGift, giftMap.getOrDefault(priceOfGift, 0) + 1);
+            }
 
-        for(int i = 0; i < numOfElements; i++){
-            num = reader.nextInt();
-            if(frequencyNumber.containsKey(num))
-                frequencyNumber.put(num, frequencyNumber.get(num) + 1);
-            else
-                frequencyNumber.put(num, 1);
+            for (int appearances : giftMap.values()) {
+                if (appearances > 1) {
+                    result += count(appearances);
+                }
+            }
+            sb.append(result).append("\n");
+            testcases--;
         }
-
-        result = numOfElements - findMaxInMap(frequencyNumber);
-        System.out.println(result);
     }
 
-    public static int findMaxInMap(HashMap<Integer, Integer> map) {
-        int max = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
-            max = e.getValue() > max ? e.getValue() : max;
-        }
-        return max;
+    public static int count(int appearances){
+        return appearances*(appearances - 1) / 2;
     }
 
     static class InputReader {

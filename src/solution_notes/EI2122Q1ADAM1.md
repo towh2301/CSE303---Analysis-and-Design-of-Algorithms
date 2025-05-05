@@ -1,4 +1,4 @@
-# EI2122Q1ADAM1 - Number of pairs
+# Lab2.EI2122Q1ADAM1 - Number of pairs
 
 ## Problem Statement
 
@@ -20,7 +20,7 @@ Given `N` integers, denoted by `numbers`, and an integer `X`. Count the number o
 ## Explanation
 
 ### Problem Analysis
-- We need to find the number of pairs `(i, j)` in the array `numbers` such that `i < j` and `numbers[i] - numbers[j] = X`.
+- We need to find the number of pairs `(i, j)` in the array `numbers` such that `i < j` and `numbers[j] - numbers[i] = X`.
 - This can be rewritten as: `numbers[i] = numbers[j] + X`.
 - For each `j`, we need to count how many previous indices `i` (where `i < j`) satisfy `numbers[i] = numbers[j] + X`.
 - Constraints:

@@ -1,4 +1,4 @@
-# EIUQBHV - Possible Passwords
+# Lab2.EIUQBHV - Possible Passwords
 
 ## Problem Statement
 

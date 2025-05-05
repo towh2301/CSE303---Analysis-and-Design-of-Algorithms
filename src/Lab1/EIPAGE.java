@@ -1,61 +1,50 @@
-import java.util.*;
-import java.io.*;
+package Lab1;
 
-public class EIMIN {
+import java.io.*;
+import java.util.*;
+
+public class EIPAGE {
     private static final InputReader reader = new InputReader(System.in);
     private static final StringBuilder sb = new StringBuilder();
+    private static final List<Integer> pageNumbers = new ArrayList<>();
+    private static final List<List<Integer>> pageList = new ArrayList<>();
 
     public static void main(String[] args) {
-        int n = reader.nextInt();
-        int k = reader.nextInt();
-        solve(n, k);
+        int numPages = reader.nextInt();
+        solve(numPages);
     }
 
-    public static void solve(int n, int k) {
-        Set<Integer> set = new HashSet<>();
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            if (num != 0) {
-                min = Math.min(num, min);
-                set.add(num);
+    public static void solve(int numPages) {
+        for (int i = 0; i < numPages; i++) {
+            int pageNumber = reader.nextInt();
+            pageNumbers.add(pageNumber);
+        }
+        Collections.sort(pageNumbers);
+
+        // Find the consecutive pages
+        for (int i = 0; i < pageNumbers.size(); i++) {
+            List<Integer> currentPages = new ArrayList<>();
+            currentPages.add(pageNumbers.get(i));
+
+            while (i + 1 < pageNumbers.size() && pageNumbers.get(i + 1) == pageNumbers.get(i) + 1) {
+                currentPages.add(pageNumbers.get(i + 1));
+                i++;
+            }
+            pageList.add(currentPages);
+        }
+
+        // Read the pageList
+        for (List<Integer> currentPages : pageList) {
+            if (currentPages.size() == 1) {
+                sb.append(currentPages.get(0)).append(" ");
+            } else if (currentPages.size() == 2) {
+                sb.append(currentPages.get(0)).append(" ").append(currentPages.get(currentPages.size() - 1)).append(" ");
+            } else {
+                sb.append(currentPages.get(0)).append("-").append(currentPages.get(currentPages.size() - 1)).append(" ");
             }
         }
 
-
-        if (min == Integer.MAX_VALUE) {
-            sb.append(min);
-        } else {
-            set.remove(min);
-            List<Integer> list = new ArrayList<>(set.stream().toList());
-            Collections.sort(list);
-
-            while (k != 0 && !list.isEmpty()) {
-                k--;
-                for (int i = 0; i < list.size(); i++) {
-                    list.set(i, list.get(i) - min);
-                    if (!(list.size() == 1)) {
-                        if (list.get(i) == 0 || list.get(i) < 0) {
-                            list.remove(i);
-                            i--;
-                        }
-                    }
-                }
-                sb.append(min).append("\n");
-                min = list.get(0);
-            }
-        }
-        System.out.println(sb);
-    }
-
-    public static int findBeforeMin(List<Integer> list) {
-        int min = Integer.MAX_VALUE;
-        int beforeMin = Integer.MAX_VALUE;
-        for (Integer integer : list) {
-            beforeMin = min;
-            min = Math.min(integer, min);
-        }
-        return (min == 0) ? beforeMin : min;
+        System.out.print(sb.toString());
     }
 
     static class InputReader {
