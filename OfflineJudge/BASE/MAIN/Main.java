@@ -3,60 +3,43 @@ import java.io.*;
 
 class  Main {
     private static final InputReader reader = new InputReader(System.in);
-    private static final StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) {
-        int n = reader.nextInt();
-        int k = reader.nextInt();
-        solve(n, k);
-    }
+        int rows = reader.nextInt();
+        int cols = reader.nextInt();
 
-    public static void solve(int n, int k) {
-        Set<Integer> set = new HashSet<>();
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            if (num != 0) {
-                min = Math.min(num, min);
-                set.add(num);
+        // Init matrix
+        long[][] matrix = new long[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = reader.nextLong();
             }
         }
 
+        long[][] tempMatrix = new long[rows][cols];
+        tempMatrix[0][0] = matrix[0][0]; // Base value
 
-        if (min == Integer.MAX_VALUE) {
-            sb.append(min);
-        } else {
-            set.remove(min);
-            List<Integer> list = new ArrayList<>(set.stream().toList());
-            Collections.sort(list);
+        // Fill the first row
+        for (int i = 1; i < cols; i++) {
+            // Plus the value of the previous first row column
+            tempMatrix[0][i] = tempMatrix[0][i - 1] + matrix[0][i];
+        }
 
-            while (k != 0 && !list.isEmpty()) {
-                k--;
-                for (int i = 0; i < list.size(); i++) {
-                    list.set(i, list.get(i) - min);
-                    if (!(list.size() == 1)) {
-                        if (list.get(i) == 0 || list.get(i) < 0) {
-                            list.remove(i);
-                            i--;
-                        }
-                    }
-                }
-                sb.append(min).append("\n");
-                min = list.get(0);
+        // Fill the first column
+        for (int i = 1; i < rows; i++) {
+            tempMatrix[i][0] = tempMatrix[i - 1][0] + matrix[i][0];
+        }
+
+        // Find the max path
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                tempMatrix[i][j] = Math.max(tempMatrix[i][j-1], tempMatrix[i-1][j]) + matrix[i][j];
             }
         }
-        System.out.println(sb);
+
+        System.out.println(tempMatrix[rows - 1][cols - 1]);
     }
 
-    public static int findBeforeMin(List<Integer> list) {
-        int min = Integer.MAX_VALUE;
-        int beforeMin = Integer.MAX_VALUE;
-        for (Integer integer : list) {
-            beforeMin = min;
-            min = Math.min(integer, min);
-        }
-        return (min == 0) ? beforeMin : min;
-    }
 
     static class InputReader {
         StringTokenizer tokenizer;
