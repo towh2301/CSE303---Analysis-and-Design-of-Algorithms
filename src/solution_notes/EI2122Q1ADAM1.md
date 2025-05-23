@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Given `N` integers, denoted by `numbers`, and an integer `X`. Count the number of pair indices `(i, j)` that `i < j` and `numbers[i] - numbers[j] = X`.
+Given `N` integers, denoted by `numbers`, and an integer `X`. Count the number of pair indices `(i, j)` that `i < j` and `numbers[j] - numbers[i] = X`.
 
 ### Input
 - The first line contains two integers `N`, `X` (`1 ≤ N ≤ 10^5`, `-10^9 ≤ X ≤ 10^9`).

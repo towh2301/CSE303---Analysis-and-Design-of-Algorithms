@@ -1,45 +1,93 @@
-import java.util.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.StringTokenizer;
 
 class  Main {
     private static final InputReader reader = new InputReader(System.in);
+    private static final StringBuilder sb = new StringBuilder();
+    private static final List<List<Double>> subsets = new ArrayList<>();
 
     public static void main(String[] args) {
-        int rows = reader.nextInt();
-        int cols = reader.nextInt();
-
-        // Init matrix
-        long[][] matrix = new long[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                matrix[i][j] = reader.nextLong();
-            }
+        List<Double> numbers = new ArrayList<>();
+        int n = reader.nextInt();
+        for (int i = 0; i < n; i++) {
+            numbers.add(reader.nextDouble());
         }
+        int numOfSetsNumbers = (int) Math.pow(2, n) - 1; // The empty set has to be removed
+        //numbers.sort(Collections.reverseOrder());
 
-        long[][] tempMatrix = new long[rows][cols];
-        tempMatrix[0][0] = matrix[0][0]; // Base value
+        /* This is for the BITMASK method */
+        bitmask(numbers, numOfSetsNumbers);
 
-        // Fill the first row
-        for (int i = 1; i < cols; i++) {
-            // Plus the value of the previous first row column
-            tempMatrix[0][i] = tempMatrix[0][i - 1] + matrix[0][i];
-        }
 
-        // Fill the first column
-        for (int i = 1; i < rows; i++) {
-            tempMatrix[i][0] = tempMatrix[i - 1][0] + matrix[i][0];
-        }
+        /* This is for the BACKTRACK method (time limit exceeded)
 
-        // Find the max path
-        for (int i = 1; i < rows; i++) {
-            for (int j = 1; j < cols; j++) {
-                tempMatrix[i][j] = Math.max(tempMatrix[i][j-1], tempMatrix[i-1][j]) + matrix[i][j];
-            }
-        }
+            backtrack(numbers, new ArrayList<>(), 0);
 
-        System.out.println(tempMatrix[rows - 1][cols - 1]);
+        */
+
+        // Print the results
+        //sb.append(numOfSetsNumbers).append("\n");
+//        for (List<Double> subset : subsets) {
+//            Collections.sort(subset);
+//            for (Double d : subset) {
+//                sb.append(Math.round(d)).append(" ");
+//            }
+//            sb.append("\n");
+//        }
+        System.out.println(numOfSetsNumbers);
+        System.out.println(sb);
     }
 
+    public static void backtrack(List<Double> numbers, List<Double> tempList, int start) {
+        // Add to subset if there is a valid tempList (prevent empty list)
+        if (!tempList.isEmpty()) {
+            subsets.add(new ArrayList<>(tempList)); // Init and Add valid tempList for each round.
+        }
+
+        // Choose each value in list to create the subset(initial start = 0)
+        for (int i = start; i < numbers.size(); i++) {
+            // Add the value to the tempList to track in the backTracking recursion method.
+            // Each value will be added to tempList each recursion round.
+            tempList.add(numbers.get(i));
+            backtrack(numbers, tempList, i + 1); // Callback the method to do the recursion with the i + 1 (for start from next value).
+            tempList.remove(tempList.size() - 1); // Remove the last value when get out of the recursion to return to the before value list.
+
+            /*
+             * 1
+             * 1 2
+             * 1 2 3
+             * ********
+             * 1 2 3
+             * 1 2
+             * 1
+             * */
+        }
+    }
+
+    public static void bitmask(List<Double> numbers, int numOfSetsNumbers) {
+        for (int i = 1; i < numOfSetsNumbers + 1; i++) {
+            String temp = Integer.toBinaryString(i); // The value is the bit result
+
+            // Fill the zero value
+            while (temp.length() != numbers.size()) {
+                temp = "0" + temp;
+            }
+
+            // Add to subset that the value is equal 1
+            List<Double> subset = new ArrayList<>();
+            for (int j = 0; j < temp.length(); j++) {
+                if (temp.charAt(j) == '1') {
+                    //subset.add(numbers.get(j));
+                    sb.append(Math.round(numbers.get(j))).append(" ");
+                }
+            }
+//            subsets.add(new ArrayList<>(subset));
+            sb.append("\n");
+        }
+    }
 
     static class InputReader {
         StringTokenizer tokenizer;

@@ -13,7 +13,7 @@ class EIUQBHVLearning {
         TreeSet<String> passwords = new TreeSet<>();
         passwords.add(String.valueOf(letter.charAt(0)));
 
-        for (int i = 0; i < letter.length(); i++) {
+        for (int i = 1; i < letter.length(); i++) {
             TreeSet<String> subPasswords = new TreeSet<>();
 
             for (String password : passwords) {

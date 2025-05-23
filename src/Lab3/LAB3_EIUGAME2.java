@@ -28,22 +28,24 @@ public class LAB3_EIUGAME2 {
         for (int i = 1; i < cols; i++) {
             // Plus the value of the previous first row column
             tempMatrix[0][i] = tempMatrix[0][i - 1] + matrix[0][i];
-            map.put(tempMatrix[0][i],map.getOrDefault(tempMatrix[0][i],0L) + 1);
+            map.put(tempMatrix[0][i], map.getOrDefault(tempMatrix[0][i], 0L) + 1);
         }
 
         // Fill the first column
         for (int i = 1; i < rows; i++) {
             tempMatrix[i][0] = tempMatrix[i - 1][0] + matrix[i][0];
+            map.put(tempMatrix[i][0], map.getOrDefault(tempMatrix[i][0], 1L) + 1);
         }
 
         // Find the max path
         for (int i = 1; i < rows; i++) {
             for (int j = 1; j < cols; j++) {
                 tempMatrix[i][j] = Math.max(tempMatrix[i][j - 1], tempMatrix[i - 1][j]) + matrix[i][j];
+                map.put(tempMatrix[i][j], map.getOrDefault(tempMatrix[i][j], 1L) + 1);
             }
         }
 
-        System.out.println(tempMatrix[rows - 1][cols - 1]);
+        System.out.println(tempMatrix[rows - 1][cols - 1] + " " + map.get(tempMatrix[rows - 1][cols - 1]));
     }
 
     static class InputReader {
