@@ -20,7 +20,7 @@ class EIPAIR {
     }
 
     public static void solve(int testcases) {
-        while(testcases != 0) {
+        while (testcases != 0) {
             result = 0;
             giftMap = new HashMap<>();
             numOfGifts = sc.nextInt();
@@ -39,8 +39,8 @@ class EIPAIR {
         }
     }
 
-    public static int count(int appearances){
-        return appearances*(appearances - 1) / 2;
+    public static int count(int appearances) {
+        return appearances * (appearances - 1) / 2;
     }
 
     static class InputReader {

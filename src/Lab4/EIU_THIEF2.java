@@ -1,41 +1,49 @@
-package Lab1;
+package Lab4;
 
 import java.io.*;
 import java.util.*;
 
-class EIUPAINTING {
+class EIU_THIEF2 {
+
     static InputReader reader = new InputReader(System.in);
 
-    public static void main(String[] args) throws IOException {
-        int numOfElements = reader.nextInt();
-        solve(numOfElements);
-    }
+    public static void main(String[] args) {
+        int numberOfItems = reader.nextInt();
+        int maxWeight = reader.nextInt();
+        int[] itemWeights = new int[numberOfItems + 1];
+        int[] itemValues = new int[numberOfItems + 1];
 
-    public static void solve(int numOfElements) throws IOException {
-        int result = 0, num = 0;
-        HashMap<Integer, Integer> frequencyNumber = new HashMap<>();
-
-        for (int i = 0; i < numOfElements; i++) {
-            num = reader.nextInt();
-            if (frequencyNumber.containsKey(num))
-                frequencyNumber.put(num, frequencyNumber.get(num) + 1);
-            else
-                frequencyNumber.put(num, 1);
+        // Read the number of items and the maximum weight
+        for (int i = 1; i <= numberOfItems; i++) {
+            itemWeights[i] = reader.nextInt();
+            itemValues[i] = reader.nextInt();
         }
 
-        result = numOfElements - findMaxInMap(frequencyNumber);
-        System.out.println(result);
-    }
+        // Initialize the DP array
+        long[][] dp = new long[numberOfItems + 1][maxWeight + 1];
 
-    public static int findMaxInMap(HashMap<Integer, Integer> map) {
-        int max = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
-            max = e.getValue() > max ? e.getValue() : max;
+        for (int i = 0; i <= numberOfItems; i++) {
+            dp[i][0] = 0;
         }
-        return max;
+        for (int j = 0; j <= maxWeight; j++) {
+            dp[0][j] = 0;
+        }
+
+        for(int i = 1; i <= numberOfItems; i++) {
+            for(int j = 1; j <= maxWeight; j++) {
+                if(itemWeights[i] <= j){
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j - itemWeights[i]] + itemValues[i]);
+                } else {
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+        System.out.println(dp[numberOfItems][maxWeight]);
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
