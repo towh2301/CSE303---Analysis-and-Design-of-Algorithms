@@ -32,6 +32,8 @@ class EIUGIFTS {
                 j--;
             }
         }
+
+
         if (sum != -1) {
             System.out.println(sum + " " + diff);
 

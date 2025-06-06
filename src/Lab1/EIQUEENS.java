@@ -20,7 +20,7 @@ public class EIQUEENS {
 
     public static String solve() throws IOException {
         // Diagonal 1: row - col (\)
-        // Diagonal 2: row + col (/
+        // Diagonal 2: row + col (/)
         String[] board = new String[numOfQueens];
         for (int i = 0; i < numOfQueens; i++) {
             board[i] = reader.nextLine();

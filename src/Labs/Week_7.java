@@ -1,55 +1,47 @@
-package Lab1;
+package Labs;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class EIMIN {
-    private static final InputReader reader = new InputReader(System.in);
-    private static final StringBuilder sb = new StringBuilder();
+public class Week_7 {
+    private static final OptimizedReader reader = new OptimizedReader(System.in);
+    private static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) {
-        int n = reader.nextInt();
-        int k = reader.nextInt();
-        solve(n, k);
+        EIUGAME2();
     }
 
-    public static void solve(int n, int k) {
-        TreeSet<Integer> treeSet = new TreeSet<>();
-        int min = 0;
-        int totalMin = 0;
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            treeSet.add(num);
-        }
+    public static void EIUGAME2() {
 
-        if (treeSet.first() == 0) treeSet.remove(0);
-        List<Integer> sortedList = new ArrayList<>(treeSet);
-
-        for (int i = 0; i < k; i++) {
-            if (i > sortedList.size() - 1) {
-                sb.append("0\n");
-                continue;
-            }
-            min = sortedList.get(i) - totalMin;
-            sb.append(min).append("\n");
-            totalMin = min;
-        }
-
-        System.out.println(sb);
     }
 
-    static class InputReader {
+    public static void EIBORE() {
+    }
+
+    public static void EITHIEF2() {
+    }
+
+    public static void EIUDP2() {
+    }
+
+    public static void EIUCOL() {
+    }
+
+    public static void EISTORE() {
+    }
+
+    private static final class OptimizedReader {
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;
         String temp;
 
-        public InputReader(InputStream stream) {
+        public OptimizedReader(InputStream stream) {
             tokenizer = null;
             reader = new BufferedReader(new InputStreamReader(stream));
         }
 
-        public InputReader(FileInputStream stream) {
+        public OptimizedReader(FileInputStream stream) {
             tokenizer = null;
             reader = new BufferedReader(new InputStreamReader(stream));
         }

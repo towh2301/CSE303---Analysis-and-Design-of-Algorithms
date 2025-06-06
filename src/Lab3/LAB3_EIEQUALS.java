@@ -13,8 +13,7 @@ class LAB3_EIEQUALS {
         Map<Integer, Integer> numMap = new HashMap<>();
 
         // Put to map the value of 2 array with the appearance of key
-        // Key is represented for the different number in two arrays, if appearance = 0
-        // => same
+        // Key is represented for the different number in two arrays, if appearance = 0 => same
         for (int i = 0; i < n; i++) {
             int num = reader.nextInt();
             numMap.put(num, numMap.getOrDefault(num, 0) + 1);
