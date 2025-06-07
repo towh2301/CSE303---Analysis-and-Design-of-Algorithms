@@ -1,9 +1,10 @@
 package Lab1;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class EIMIN {
+
     private static final InputReader reader = new InputReader(System.in);
     private static final StringBuilder sb = new StringBuilder();
 
@@ -22,7 +23,9 @@ public class EIMIN {
             treeSet.add(num);
         }
 
-        if (treeSet.first() == 0) treeSet.remove(0);
+        if (treeSet.first() == 0) {
+            treeSet.remove(0);
+        }
         List<Integer> sortedList = new ArrayList<>(treeSet);
 
         for (int i = 0; i < k; i++) {
@@ -39,6 +42,7 @@ public class EIMIN {
     }
 
     static class InputReader {
+
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;

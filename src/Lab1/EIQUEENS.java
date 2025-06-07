@@ -24,14 +24,16 @@ public class EIQUEENS {
         String[] board = new String[numOfQueens];
         for (int i = 0; i < numOfQueens; i++) {
             board[i] = reader.nextLine();
-            if (!checkQueen(i, board[i].indexOf("*"))) return "invalid";
+            if (!checkQueen(i, board[i].indexOf("*")))
+                return "invalid";
         }
 
         return "valid";
     }
 
     public static boolean checkQueen(int row, int col) {
-        if (rows.contains(row) || cols.contains(col) || diag1.contains(row - col) || diag2.contains(row + col)) {
+        if (rows.contains(row) || cols.contains(col) || diag1.contains(row - col)
+                || diag2.contains(row + col)) {
             return false;
         }
         rows.add(row);

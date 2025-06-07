@@ -1,9 +1,7 @@
-package Labs;
-
 import java.io.*;
 import java.util.*;
 
-public class Week_6 {
+class  Main {
 
     private static final OptimizedReader reader = new OptimizedReader(System.in);
     private static StringBuilder sb = new StringBuilder();
@@ -217,3 +215,4 @@ public class Week_6 {
         }
     }
 }
+
