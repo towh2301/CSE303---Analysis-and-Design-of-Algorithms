@@ -10,7 +10,8 @@ public class Week_6 {
     private static final long MOD = 10000000;
 
     public static void main(String[] args) {
-        EIUCOL();
+        // EIUCOL();
+        System.out.println("Hello");
     }
 
     public static void EIUGAME2() {
