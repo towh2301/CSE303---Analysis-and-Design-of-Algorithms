@@ -139,11 +139,7 @@ public class Week_4 {
             }
         }
 
-        if (isValid) {
-            System.out.println("YES");
-        } else {
-            System.out.println("NO");
-        }
+        System.out.println(isValid ? "YES" : "NO");
     }
 
     public static void EIDIVIDE() {

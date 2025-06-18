@@ -1,32 +1,30 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week3;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+class EIULOVE {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        long limit = reader.nextLong();
+        long res = -1;
 
         for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            int num  = reader.nextInt();
+            if (num <= limit && num > res) {
+                res = num;
+            }
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+        System.out.println(res);
     }
 
     private static final class InputReader {

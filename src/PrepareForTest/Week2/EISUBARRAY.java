@@ -1,32 +1,34 @@
 package PrepareForTest.Week2;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EISUBARRAY {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        long pos = 0, neg = 0, max = Integer.MIN_VALUE;
 
         for (int i = 0; i < n; i++) {
             int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            pos += num;
+            neg += num;
+
+            if (pos < 0) pos = 0;
+            if (neg > 0) neg = 0;
+
+            max = Math.max(max, pos);
+            max =  Math.max(max, Math.abs(neg));
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+        System.out.println(max);
     }
 
     private static final class InputReader {

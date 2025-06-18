@@ -1,32 +1,45 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week3;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EIPAIR {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        while (n-- > 0) {
+            int m = reader.nextInt();
+            HashMap<Integer, Integer> map = new HashMap<>();
+            for (int i = 0; i < m; i++) {
+                int num = reader.nextInt();
+                map.put(num, map.getOrDefault(num, 0) + 1);
+            }
+
+            long result = 0;
+            for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+                int val = entry.getValue();
+
+                if (val < 2) result += 0;
+                else {
+                    result += (long) val * (val - 1) / 2;
+                }
+            }
+
+            sb.append(result).append("\n");
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+        System.out.println(sb.toString());
     }
 
     private static final class InputReader {

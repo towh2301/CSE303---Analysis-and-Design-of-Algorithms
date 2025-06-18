@@ -1,32 +1,39 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week3;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EI2122Q1ADAM1 {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
+        int k = reader.nextInt();
         HashMap<Integer, Integer> map = new HashMap<>();
+        int count = 0;
 
         for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            int temp = reader.nextInt();
+            int num = temp - k;
+
+            if (map.containsKey(num)) {
+                count += map.get(num);
+            }
+
+            map.put(temp, map.getOrDefault(temp, 0) + 1);
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
 
-        System.out.println(n - result);
+        System.out.println(count);
     }
 
     private static final class InputReader {

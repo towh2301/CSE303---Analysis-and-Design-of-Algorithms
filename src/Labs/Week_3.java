@@ -11,7 +11,7 @@ public class Week_3 {
         //EIULOVE();
         //EIUGIFTS();
         //EI2122Q1ADAM1();
-        //EI2122Q1ADAM2();
+        EI2122Q1ADAM2();
     }
 
     public static void EIPAIR() {

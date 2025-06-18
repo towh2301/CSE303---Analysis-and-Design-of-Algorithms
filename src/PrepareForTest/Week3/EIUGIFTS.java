@@ -1,32 +1,52 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week3;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EIUGIFTS {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        int k = reader.nextInt();
 
+        int[] price = new int[n];
         for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            price[i] = reader.nextInt();
+        }
+        Arrays.sort(price);
+
+        int i = 0, j = n - 1;
+        int maxSum = -1;
+        int minDiff = Integer.MAX_VALUE;
+
+        while (i < j) {
+            int sum = price[i] + price[j];
+            int diff = price[j] - price[i];
+
+            if (sum > k) {
+                j--;
+            } else {
+                if (sum > maxSum || (sum == maxSum && diff < minDiff)) {
+                    maxSum = sum;
+                    minDiff = diff;
+                }
+                i++;
+            }
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
+        if (maxSum == -1) {
+            System.out.println("-1 -1");
+        } else {
+            System.out.println(maxSum + " " + minDiff);
         }
-
-        System.out.println(n - result);
     }
 
     private static final class InputReader {

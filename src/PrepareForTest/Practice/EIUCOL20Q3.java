@@ -1,32 +1,34 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Practice;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EIUCOL20Q3 {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
-        int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+    public static void solve() {
+        int X = reader.nextInt();
+        int p1 = reader.nextInt();
+        int p2 = reader.nextInt();
+        int p3 = reader.nextInt();
+        int count = 0;
 
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        for (int a = 0; a * p1 <= X; a++) {
+            int maxB = (X - a * p1) / p2;
+            for (int b = 0; b <= maxB; b++) {
+                int remain = X - (b * p2 + a * p1);
+                if (remain % p3 == 0) count++;
+            }
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
+        System.out.println(count);
 
-        System.out.println(n - result);
     }
 
     private static final class InputReader {

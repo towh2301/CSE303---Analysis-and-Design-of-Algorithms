@@ -1,32 +1,46 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week4;
 
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EIEQUALS {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
+        int k = reader.nextInt();
+
         HashMap<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
             int num = reader.nextInt();
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
+        for (int i = 0; i < k; i++) {
+            int num = reader.nextInt();
+            map.put(num, map.getOrDefault(num, 0) - 1);
         }
 
-        System.out.println(n - result);
+        boolean flag = true;
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (Math.abs(entry.getValue()) > 1) {
+                flag = false;
+                break;
+            }
+            if (Math.abs(entry.getValue()) == 1) {
+                flag = Math.abs(entry.getKey() - k) <= k;
+                if (!flag) break;
+            }
+        }
+
+        System.out.println(flag ? "YES" : "NO");
+
     }
 
     private static final class InputReader {

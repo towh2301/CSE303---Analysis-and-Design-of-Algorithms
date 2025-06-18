@@ -3,30 +3,39 @@ package PrepareForTest.Week2;
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EIQUEEN {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        solve();
+    public static void main(String[] args) {
+        System.out.println(solve());
     }
 
-    public static void solve() throws IOException {
-        int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+    public static String solve() {
+        // Set<Integer> horizontal = new HashSet<>(); don't need
+        Set<Integer> vertical = new HashSet<>();
+        Set<Integer> diagonal_1 = new HashSet<>(); //  '/'
+        Set<Integer> diagonal_2 = new HashSet<>(); //  '\'
+        String[] puzzle = new String[8];
 
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        for (int i = 0; i < 8; i++) {
+            puzzle[i] = reader.next();
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
+        for (int i = 0; i < 8; i++) {
+            int idx = puzzle[i].indexOf("*");
+            int dia_1 = i - idx;
+            int dia_2 = i + idx;
+
+            if (vertical.contains(idx) || diagonal_1.contains(dia_1) || diagonal_2.contains(dia_2)) return "invalid";
+
+            vertical.add(idx);
+            diagonal_1.add(dia_1);
+            diagonal_2.add(dia_2);
         }
 
-        System.out.println(n - result);
+        return "valid";
     }
 
     private static final class InputReader {

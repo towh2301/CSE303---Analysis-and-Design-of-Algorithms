@@ -1,32 +1,18 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week4;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EIUSUBSET {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
-        int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+    public static void solve() {
     }
 
     private static final class InputReader {

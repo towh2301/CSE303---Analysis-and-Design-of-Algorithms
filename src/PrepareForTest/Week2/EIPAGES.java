@@ -3,30 +3,52 @@ package PrepareForTest.Week2;
 import java.io.*;
 import java.util.*;
 
-public class EIPAINTING {
+public class EIPAGES {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
+        List<Integer> list = new ArrayList<>();
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
             int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            list.add(num);
+        }
+        Collections.sort(list);
+
+        int first = list.get(0), continuous = 0, previous = first, num = first;
+        for (int i = 1; i <= n; i++) {
+            if (i < n) {
+                num = list.get(i);
+            }
+
+            if (num - 1 == previous) {
+                continuous += 1;
+                previous = num;
+                continue;
+            }
+
+            // Check if continuous > 1
+            if (continuous == 1) {
+                sb.append(first).append(" ").append(previous).append(" ");
+            } else if (continuous > 1) {
+                sb.append(first).append("-").append(previous).append(" ");
+            } else {
+                sb.append(previous).append(" ");
+            }
+
+            first = num;
+            previous = num;
+            continuous = 0;
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+        System.out.println(sb.toString());
     }
 
     private static final class InputReader {

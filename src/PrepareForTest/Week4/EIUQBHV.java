@@ -1,32 +1,55 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week4;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
 
-public class EIPAINTING {
+public class EIUQBHV {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
-        int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+    public static void solve() {
+        String pass = reader.next();
+        TreeSet<String> generatedPasses = new TreeSet<>();
 
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        generatedPasses.add(String.valueOf(pass.charAt(0)));
+
+        // Generate pass
+        for (int i = 1; i < pass.length(); i++) {
+            TreeSet<String> temp = new TreeSet<>();
+
+            for (String p : generatedPasses) {
+                for (int j = 0; j <= p.length(); j++) {
+                    String tempPass = p.substring(0, j) + pass.charAt(i) + p.substring(j);
+                    temp.add(tempPass);
+                }
+            }
+            generatedPasses = temp;
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
+        sb.append(generatedPasses.size()).append("\n");
+        for (String p : generatedPasses) {
+            sb.append(p).append("\n");
         }
 
-        System.out.println(n - result);
+        System.out.println(sb.toString());
+    }
+
+    public static long countSimpleFactorial(int n) {
+        if (n == 0) return 1;
+
+        long num = 1;
+
+        for (int i = 1; i <= n; i++) {
+            num *= i;
+        }
+
+        return num;
     }
 
     private static final class InputReader {

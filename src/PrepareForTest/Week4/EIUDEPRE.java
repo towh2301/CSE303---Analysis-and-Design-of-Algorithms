@@ -1,32 +1,39 @@
-package PrepareForTest.Week2;
+package PrepareForTest.Week4;
 
 import java.io.*;
-import java.util.*;
+import java.util.StringTokenizer;
 
-public class EIPAINTING {
+public class EIUDEPRE {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        double c = reader.nextDouble();
+        double r = reader.nextDouble();
 
-        for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+        double high = 1.0, low = 0, mid = .5;
+        while (high - low > 0.00000001) {
+            mid = (high + low) / 2;
+            double temp = c;
+
+            for (int i = 0; i < n; i++) {
+                temp -= temp * (mid - mid * i / n);
+            }
+
+            if (temp < r) {
+                high = mid;
+            } else {
+                low = mid;
+            }
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
-        }
-
-        System.out.println(n - result);
+        System.out.printf("%.7f", mid);
     }
 
     private static final class InputReader {

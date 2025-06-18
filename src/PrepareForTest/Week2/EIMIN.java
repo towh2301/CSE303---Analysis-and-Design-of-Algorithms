@@ -1,32 +1,43 @@
 package PrepareForTest.Week2;
 
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
 
-public class EIPAINTING {
+public class EIMIN {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         solve();
     }
 
-    public static void solve() throws IOException {
+    public static void solve() {
         int n = reader.nextInt();
-        HashMap<Integer, Integer> map = new HashMap<>();
+        int k = reader.nextInt();
+        int min = 0;
+        TreeSet<Integer> treeSet = new TreeSet<>();
 
         for (int i = 0; i < n; i++) {
-            int num = reader.nextInt();
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            treeSet.add(reader.nextInt());
         }
 
-        int result = Integer.MIN_VALUE;
-        for (Map.Entry<Integer, Integer> num : map.entrySet()) {
-            result = num.getValue() > result ? num.getValue() : result;
+        treeSet.remove(0);
+        int[] arr = treeSet.stream().mapToInt(x -> x).toArray();
+        for (int i = 0; i < k; i++) {
+            if (arr.length > i) {
+                int num = arr[i] - min;
+                sb.append(num).append("\n");
+                min += num;
+            } else {
+                sb.append(0).append("\n");
+            }
         }
 
-        System.out.println(n - result);
+        System.out.println(sb);
+
     }
 
     private static final class InputReader {
