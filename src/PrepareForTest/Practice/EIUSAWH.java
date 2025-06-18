@@ -1,8 +1,9 @@
+package PrepareForTest.Practice;
 
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
-class  Main {
+public class EIUSAWH {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
@@ -12,22 +13,33 @@ class  Main {
     }
 
     public static void solve() {
-        int X = reader.nextInt();
-        int p1 = reader.nextInt();
-        int p2 = reader.nextInt();
-        int p3 = reader.nextInt();
-        int count = 0;
+        int n = reader.nextInt();
+        long m = reader.nextLong();
+        long high = -1, low = 0, mid = 0, ans = mid;
+        long[] trees = new long[n];
+        for (int idx = 0; idx < n; idx++) {
+            trees[idx] = reader.nextLong();
+            high = trees[idx] > high ? trees[idx] : high;
+        }
 
-        for (int a = 0; a * p1 <= X; a++) {
-            int maxB = (X - a * p1) / p2;
-            for (int b = 0; b <= maxB; b++) {
-                int remain = X - (b * p2 + a * p1);
-                if (remain % p3 == 0) count++;
+        while (high >= low) {
+            mid = (high + low) / 2;
+            long temp = 0;
+            for (int i = 0; i < n; i++) {
+                if (trees[i] > mid) {
+                    temp += trees[i] - mid;
+                }
+            }
+
+            if (temp < m) {
+                high = mid - 1;
+            } else {
+                ans = mid;
+                low = mid + 1;
             }
         }
 
-        System.out.println(count);
-
+        System.out.println(ans);
     }
 
     private static final class InputReader {
@@ -79,4 +91,3 @@ class  Main {
         }
     }
 }
-

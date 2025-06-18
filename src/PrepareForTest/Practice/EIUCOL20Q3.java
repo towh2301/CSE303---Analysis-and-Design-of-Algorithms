@@ -1,7 +1,7 @@
 package PrepareForTest.Practice;
 
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class EIUCOL20Q3 {
 
@@ -17,18 +17,19 @@ public class EIUCOL20Q3 {
         int p1 = reader.nextInt();
         int p2 = reader.nextInt();
         int p3 = reader.nextInt();
-        int count = 0;
 
-        for (int a = 0; a * p1 <= X; a++) {
-            int maxB = (X - a * p1) / p2;
-            for (int b = 0; b <= maxB; b++) {
-                int remain = X - (b * p2 + a * p1);
-                if (remain % p3 == 0) count++;
+        long[] dp = new long[X + 1];
+        dp[0] = 1;
+
+        int[] prices = {p1, p2, p3};
+
+        for (Integer price : prices) {
+            for (int i = price; i <= X; i++) {
+                dp[i] += dp[i - price];
             }
         }
 
-        System.out.println(count);
-
+        System.out.println(dp[X]);
     }
 
     private static final class InputReader {

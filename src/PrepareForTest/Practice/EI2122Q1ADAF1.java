@@ -1,8 +1,9 @@
+package PrepareForTest.Practice;
 
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
 
-class  Main {
+public class EI2122Q1ADAF1 {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
@@ -12,22 +13,22 @@ class  Main {
     }
 
     public static void solve() {
-        int X = reader.nextInt();
-        int p1 = reader.nextInt();
-        int p2 = reader.nextInt();
-        int p3 = reader.nextInt();
-        int count = 0;
-
-        for (int a = 0; a * p1 <= X; a++) {
-            int maxB = (X - a * p1) / p2;
-            for (int b = 0; b <= maxB; b++) {
-                int remain = X - (b * p2 + a * p1);
-                if (remain % p3 == 0) count++;
-            }
+        int n = reader.nextInt();
+        int[] prices = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            prices[i] = reader.nextInt();
         }
 
-        System.out.println(count);
+        long[][] dp = new long[n][2];
+        dp[0][0] = 2 * prices[0];
+        dp[0][1] = prices[0];
 
+        for (int i = 1; i < n; i++) {
+            dp[i][1] = Math.max(dp[i - 1][0], dp[i - 1][1]) + prices[i];
+            dp[i][0] = dp[i - 1][1] + prices[i] * 2;
+        }
+
+        System.out.println(Math.max(dp[n - 1][0], dp[n - 1][1]));
     }
 
     private static final class InputReader {
@@ -79,4 +80,3 @@ class  Main {
         }
     }
 }
-
