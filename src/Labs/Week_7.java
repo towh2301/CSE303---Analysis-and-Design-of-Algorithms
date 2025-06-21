@@ -308,9 +308,7 @@ public class Week_7 {
             temp[k++] = arr[j++];
         }
 
-        for (int h = 0; h < k; h++) {
-            arr[l + h] = temp[h];
-        }
+        System.arraycopy(temp, 0, arr, l, k);
 
         return count;
     }
