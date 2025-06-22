@@ -23,30 +23,48 @@ public class EIDP2 {
                 a[i] = reader.nextInt();
             }
 
-            int[] prefix = new int[n + 1];
-            for (int i = 1; i <= n; i++) {
-                prefix[i] = prefix[i - 1] + a[i - 1];
-            }
-
-            int[] dp = new int[n + 1];
-            for (int i = 1; i <= n; i++) {
-                dp[i] = dp[i - 1]; // không chọn giờ i
-
-                for (int len = 1; len <= k && i - len >= 0; len++) {
-                    int sum = prefix[i] - prefix[i - len];
-                    int prev = (i - len - 1 >= 0) ? dp[i - len - 1] : 0;
-                    dp[i] = Math.max(dp[i], sum + prev);
-                }
-            }
-
-            sb.append(dp[n]).append("\n");
+            int maxEarnings = maxEarningsCarota(n, k, a);
+            sb.append(maxEarnings).append("\n");
         }
 
         System.out.println(sb);
     }
 
-    private static final class InputReader {
+    public static int maxEarningsCarota(int n, int k, int[] a) {
+        int[] dp = new int[n + 1]; // dp[i] là số tiền lớn nhất đến giờ i
 
+        for (int i = 0; i < n; i++) {
+            // Không làm ở giờ i
+            if (i > 0) {
+                dp[i + 1] = dp[i];
+            } else {
+                dp[i + 1] = 0;
+            }
+
+            // Làm ở giờ i, xem xét các đoạn làm kết thúc tại i
+            for (int len = 1; len <= k && i - len + 1 >= 0; len++) {
+                int start = i - len + 1; // Giờ bắt đầu của đoạn làm
+                int segmentSum = 0;
+
+                // Tính tổng tiền của đoạn làm từ start đến i
+                for (int j = start; j <= i; j++) {
+                    segmentSum += a[j];
+                }
+
+                // Cộng với số tiền lớn nhất trước đoạn nghỉ (nếu có)
+                if (start >= k) {
+                    segmentSum += dp[start - k];
+                } // Nếu start < k, không có đoạn làm trước, dp[0] = 0 nên không cần cộng
+
+                // Cập nhật dp[i+1]
+                dp[i + 1] = Math.max(dp[i + 1], segmentSum);
+            }
+        }
+
+        return dp[n];
+    }
+
+    private static final class InputReader {
         StringTokenizer tokenizer;
         BufferedReader reader;
         String token;

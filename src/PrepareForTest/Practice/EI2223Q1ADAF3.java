@@ -3,7 +3,7 @@ package PrepareForTest.Practice;
 import java.io.*;
 import java.util.*;
 
-public class EIUCOINGAME2 {
+public class EI2223Q1ADAF3 {
 
     private static InputReader reader = new InputReader(System.in);
     private static StringBuilder sb = new StringBuilder();
@@ -14,36 +14,25 @@ public class EIUCOINGAME2 {
 
     public static void solve() {
         int n = reader.nextInt();
-        List<Integer> val = new ArrayList<>();
+        int[] val = new int[n];
+        for (int i = 0; i < n; i++) val[i] = reader.nextInt();
 
-        for (int i = 0; i < n; i++) {
-            val.add(reader.nextInt());
-        }
+        long[] dp = new long[n + 1];  // dp[i] = max value up to tree i-1
+        dp[0] = 0;
 
-        int[][] dp = new int[n + 1][2];
+        for (int i = 2; i <= n; i++) {
+            long maxSegment = val[i - 2] + val[i - 1];
+            long sum = maxSegment;
 
-        // 0: me
-        // 1: opponent
-        for (int i = 1; i <= n; i++) {
-            if (val.isEmpty()) {
-                break;
+            for (int j = i - 3; j >= 0; j--) {
+                sum += val[j];
+                maxSegment = Math.max(maxSegment, sum);
             }
-            dp[i][0] = Math.max(val.get(0), val.get(val.size() - 1)) + dp[i - 1][0];
-            val.remove(val.get(0) > val.get(val.size() - 1) ? 0 : val.size() - 1);
 
-            if (val.isEmpty()) {
-                break;
-            }
-            dp[i][1] = Math.max(val.get(0), val.get(val.size() - 1)) + dp[i - 1][1];
-            val.remove(val.get(0) > val.get(val.size() - 1) ? 0 : val.size() - 1);
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + maxSegment);
         }
 
-        if (n % 2 == 0) {
-            System.out.println(Math.max(dp[n / 2][0], dp[n / 2][1]));
-        } else {
-            System.out.println(Math.max(dp[n / 2 + 1][0], dp[n / 2 + 1][1]));
-        }
-
+        System.out.println(dp[n]);
     }
 
     private static final class InputReader {

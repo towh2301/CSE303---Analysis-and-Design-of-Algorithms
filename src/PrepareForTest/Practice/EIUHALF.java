@@ -1,15 +1,11 @@
-package PrepareForTest.Week4;
+package PrepareForTest.Practice;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 
-public class EIUSUBSET {
+public class EIUHALF {
 
-    private static InputReader reader = new InputReader(System.in);
-    private static StringBuilder sb = new StringBuilder();
+    private static final InputReader reader = new InputReader(System.in);
 
     public static void main(String[] args) {
         solve();
@@ -17,31 +13,39 @@ public class EIUSUBSET {
 
     public static void solve() {
         int n = reader.nextInt();
-        double[] arr = new double[n];
-        for (int i = 0; i < n; i++) arr[i] = reader.nextDouble();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = reader.nextInt();
+        }
 
-        int numOfSubsets = (int) Math.pow(2, n) - 1; // don't use the first 1 (empty subset)
-        sb.append(numOfSubsets).append("\n");
+        int end = n - 1, start = 0, mid = n / 2, first = 0, second = 0, min = Integer.MAX_VALUE;
 
-        generateSubsetWithBit(arr, numOfSubsets);
+        while (end > start) {
+            mid = (end + start) / 2;
 
-        System.out.println(sb.toString());
+            first = calHalf(0, mid, arr);
+            second = calHalf(mid, n, arr);
+
+            if (first == second) break;
+
+            if (first > second) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        System.out.println(Math.abs(first - second));
+
     }
 
-    public static void generateSubsetWithBit(double[] arr, int subsets) {
-        for (int i = 1; i <= subsets; i++) {
-            String bits = Integer.toBinaryString(i);
-            while (bits.length() < arr.length) {
-                bits = "0" + bits;
-            }
-
-            for (int j = 0; j < bits.length(); j++) {
-                if (String.valueOf(bits.charAt(j)).equals("1")) {
-                    sb.append(Math.round(arr[j])).append(" ");
-                }
-            }
-            sb.append("\n");
+    public static int calHalf(int start, int end, int[] arr) {
+        int sum = 0;
+        for (int i = start; i < end; i++) {
+            sum += arr[i];
         }
+
+        return sum;
     }
 
     private static final class InputReader {
